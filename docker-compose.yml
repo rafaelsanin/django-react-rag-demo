@@ -1,0 +1,67 @@
+version: '3.9'
+
+services:
+  project:
+    build:
+      context: .
+      args:
+        - DEV=true
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./project_root_directory:/project_root_directory
+      - dev-static-data:/vol/web
+      - dev-nomic-data:/vol/cache/gpt4all
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    environment:
+      - DB_HOST=db
+      - DB_NAME=devdb
+      - DB_USER=devuser
+      - DB_PASS=changeme
+      - NOMIC_DEFAULT_MODEL_PATH=/vol/cache/gpt4all
+      - PGVECTOR_CONNECTION_STRING=postgresql://devuser:changeme@db:5432/devdb
+    depends_on:
+      - db
+      - ollama
+
+  ollama:
+    image: ollama/ollama
+    ports:
+      - 11435:11434
+    volumes:
+      - dev-llama-data:/vol/cache/llama
+    healthcheck:
+      test: ollama list || exit 1
+      interval: 10s
+      timeout: 30s
+      retries: 5
+      start_period: 10s
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [ gpu ]
+    # command: >
+    #   /bin/sh -c "ollama pull llama3 && ollama serve"
+  
+  db:
+    image: pgvector/pgvector:pg16
+    ports:
+      - "5432:5432"
+    volumes:
+      - dev-db-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=devdb
+      - POSTGRES_USER=devuser
+      - POSTGRES_PASSWORD=changeme
+
+volumes:
+  dev-db-data:
+  dev-static-data:
+  dev-nomic-data:
+  dev-llama-data:

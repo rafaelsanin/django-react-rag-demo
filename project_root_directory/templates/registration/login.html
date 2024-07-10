@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block styles %}
+<style>
+    body {
+        background-color: #212121;
+        font-family: 'Roboto', sans-serif;
+        color: #ddd;
+        /* Lighter text color for better contrast */
+        margin: 0;
+        /* Remove default margin for full-width */
+    }
+
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        padding: 20px;
+    }
+
+    .card {
+        max-width: 360px;
+        width: 100%;
+        background-color: #333;
+        /* Darker background */
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+        background-color: #444;
+        color: #ddd;
+        font-size: 24px;
+        font-weight: 500;
+        text-align: center;
+        padding: 20px;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-weight: 500;
+        display: block;
+        margin-bottom: 8px;
+        color: #bbb;
+        /* Lighter label text */
+    }
+
+    input[type=text],
+    input[type=password] {
+        border-radius: 5px;
+        border: 1px solid #555;
+        /* Darker border */
+        padding: 12px;
+        font-size: 14px;
+        width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        background-color: #333;
+        /* Darker input background */
+        color: #ddd;
+        /* Lighter input text */
+        transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+    }
+
+    input[type=text]:focus,
+    input[type=password]:focus {
+        border-color: #666;
+        background-color: #444;
+        /* Darker background on focus */
+        color: #fff;
+        /* Lighter text on focus */
+    }
+
+    button[type=submit] {
+        background-color: #444;
+        color: #ddd;
+        font-size: 16px;
+        font-weight: 500;
+        padding: 12px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        transition: background-color 0.3s;
+    }
+
+    button[type=submit]:hover {
+        background-color: #555;
+    }
+
+    .alert-danger {
+        background-color: #f8f9fa;
+        color: #333;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="login-container">
+    <div class="card">
+        <div class="card-header">Login</div>
+        <div class="card-body">
+            {% if messages %}
+            <div class="alert-danger">
+                {% for message in messages %}
+                {{ message }}
+                {% endfor %}
+            </div>
+            {% endif %}
+            <form method="post" action="{% url 'app_account:login' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="text" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+            <div class="register-anchor">
+                <p>Don't have an account? <a href="{% url 'app_account:register' %}">Register</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

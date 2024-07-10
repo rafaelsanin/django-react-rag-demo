@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+    AI Chatbot
+{% endblock %}
+
+{% block styles %}
+    <!-- Include any additional styles if necessary -->
+    {% if main_css %}
+        <link rel="stylesheet" href="{{ main_css }}">
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    <div id="root"></div>
+{% endblock %}
+
+{% block scripts %}
+    <!-- Include any additional scripts if necessary before main_js -->
+    {{ chats|json_script:'chats' }}
+
+    <!-- Include React build script -->
+    {% if main_js %}
+        <script src="{{ main_js }}"></script> 
+    {% endif %}
+{% endblock %}

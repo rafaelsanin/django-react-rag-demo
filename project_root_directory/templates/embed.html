@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Embedding Generator</title>
+</head>
+
+<body>
+    <h1>Generate Text Embedding</h1>
+    <form method="post">
+        {% csrf_token %}
+        <textarea name="text" rows="4" cols="50"></textarea><br />
+        <button type="submit">Generate Embedding</button>
+    </form>
+    <h2>Original</h2>
+    {% if text %}
+        {{ text }}
+    {% endif %}
+    <h2>Most Similar</h2>
+    {% if result %}
+        {{ result.document }}
+    {% endif %}
+    <h2>Embeddings in DB</h2>
+    {% if embeddings %}
+        {% for embedding in embeddings %} 
+            {{ embedding.document }}
+            <br>
+            <!-- <pre>{{ embedding.embedding }}</pre> -->
+        {% endfor %}
+    {% endif %}
+</body>
+
+</html>

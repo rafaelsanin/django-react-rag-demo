@@ -1,0 +1,23 @@
+.chat-input {
+    padding: 2px 4px;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    background-color: #424242;
+    color: #fff;
+  }
+  
+  .icon-button {
+    padding: 10px;
+  }
+  
+  .icon {
+    color: #fff;
+  }
+  
+  .input-base {
+    margin-left: 1rem;
+    flex: 1;
+    color: #fff;
+  }
+  

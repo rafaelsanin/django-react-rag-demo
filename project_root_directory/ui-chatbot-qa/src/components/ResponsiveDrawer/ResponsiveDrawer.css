@@ -1,0 +1,44 @@
+.responsiveDrawerContainer {
+    display: flex;
+}
+
+.navBox {
+    width: 240px;
+    flex-shrink: 0;
+}
+
+.navBoxTemporary {
+    display: block;
+}
+
+.navBoxPermanent {
+    display: none;
+}
+
+.navBoxDrawerPaper {
+    box-sizing: border-box;
+    width: 240px;
+}
+
+.mainContent {
+    flex-grow: 1;
+    padding: 24px;
+    /* Equivalent to `p: 3` */
+    width: calc(100% - 240px);
+}
+
+@media (max-width: 600px) {
+    .displayFlex {
+        display: flex;
+    }
+}
+
+@media (min-width: 600px) {
+    .navBoxTemporary {
+        display: none;
+    }
+
+    .navBoxPermanent {
+        display: block;
+    }
+}

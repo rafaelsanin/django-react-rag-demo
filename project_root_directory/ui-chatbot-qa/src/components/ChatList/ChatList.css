@@ -1,0 +1,17 @@
+.chat-list {
+    overflow-y: auto;
+}
+
+.chat-message {
+    text-align: right;
+    margin: 10px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
+
+.chat-response {
+    text-align: left;
+    color: gray;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+}
